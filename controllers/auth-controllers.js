@@ -5,16 +5,25 @@ const bcrypt =require('bcryptjs')
  const registerUser = async(req,res)=>{
     try {
         //extract information from our request body
-        const {username,email,password,role}=req.body;
+        const {username,email,password,role}= req.body;
 
         //check if the user already exists in datatbase
-        const checkExistingUser =await User.findOne({$or:[{username},{email}]})
-        if (checkExistingUser) {
+        const checkExistingusername =await User.findOne({username})
+        const checkExistingemail =await User.findOne({email})
+        if (checkExistingusername) {
             return res.status(400).json({
                 success:false,
-                message:"User already exists with this email/username!Try with different username/email"
+                message:"User already exists with this username!Try with different username"
             })
         }
+        if (checkExistingemail) {
+            return res.status(400).json({
+                success:false,
+                message:"User already exists with this email!Try with different email"
+            })
+        }
+        
+        
 
         //hash user password
         const salt = await bcrypt.genSalt(10);
