@@ -1,5 +1,7 @@
+require('dotenv').config()
 const User =require('../models/User')
 const bcrypt =require('bcryptjs')
+const jwt =require('jsonwebtoken')
 
 // register controllers
  const registerUser = async(req,res)=>{
@@ -66,7 +68,41 @@ const bcrypt =require('bcryptjs')
 // login controllers
  const loginUser = async(req,res)=>{
     try {
-        
+         //extract information from our request body
+        const {username,password}= req.body;
+
+        //check if username exists
+        const user= await User.findOne({username})
+        if (!user) {
+            return res.status(404).json({
+                success:false,
+                message:"Invalid username."
+            })
+        }
+
+        //check if password is correct
+        const isPassword = await bcrypt.compare(password,user.password)
+        if (!isPassword) {
+            return res.status(404).json({
+                success:false,
+                message:"Invalid password."
+            }) 
+        }
+
+        //create user token
+        const accessToken = jwt.sign({
+            userId:user._id,
+            username:user.username,
+            role:user.role
+        },process.env.JWT_SECRET_KEY,
+        {expiresIn:'15m'})
+
+        res.status(200).json({
+            success:true,
+            message:"Logged In successfully.",
+            accessToken
+        }) 
+
     } catch (err) {
         console.log(err);
         res.status(500).json({
