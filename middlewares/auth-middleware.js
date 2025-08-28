@@ -1,6 +1,8 @@
 
 const authMiddleware = (req,res,next)=>{
-    console.log("Auth midlleware is called");
+    const authHeader = req.headers["authorization"];
+    console.log(authHeader);
+    
     next()
 }
 
