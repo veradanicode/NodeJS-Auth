@@ -42,10 +42,18 @@ const jwt =require('jsonwebtoken')
         await newUser.save();
 
         if (newUser) {
-            res.status(201).json({
-                success:true,
-                message:"User created successfully"
-            })
+            if (newUser.role=="user") {
+                res.status(201).json({
+                    success:true,
+                    message:"User created successfully"
+                })
+            }
+            if (newUser.role=="admin") {
+                res.status(201).json({
+                    success:true,
+                    message:"Admin created successfully"
+                })
+            }
         }else{
             res.status(400).json({
                 success:false,
@@ -71,6 +79,7 @@ const jwt =require('jsonwebtoken')
          //extract information from our request body
         const {username,password}= req.body;
 
+    
         //check if username exists
         const user= await User.findOne({username})
         if (!user) {
