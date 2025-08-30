@@ -7,7 +7,7 @@ const adminMiddleware =require('../middlewares/admin-middleware')
 
 router.get('/welcome',authMiddleware,adminMiddleware,(req,res)=>{
     res.json({
-        message:"Welcome to the admin page"
+        message:"Welcome to  admin page"
     })
 })
 
