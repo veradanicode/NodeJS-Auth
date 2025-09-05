@@ -34,11 +34,11 @@ const uploadImage = async (req,res)=>{
         console.log(error);
         res.status(500).json({
             success:false,
-            message:"Something went wrong!Please try again"
+            message: "Something went wrong!Please try again"
         })
     }
 }
 
 module.exports = {
-    uploadImage
+    uploadImage,
 }
