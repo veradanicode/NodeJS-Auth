@@ -1,13 +1,13 @@
 const Image =require('../models/Image')
 const {uploadToCloudinary} =require('../helpers/cloudinaryHelpers')
 
-const uploadImage = async (req,res)=>{
+const uploadImageController = async (req,res)=>{
     try {
         //check if file path is missing in req object
         if (!req.file) {
             return res.status(400).json({
                 success:false,
-                message:"File is required!Please uploasd an image"
+                message:"File is required!Please upload an image"
             })
         }
 
@@ -18,7 +18,7 @@ const uploadImage = async (req,res)=>{
         const newlyUploadedImage = new Image({
             url,
             publicId,
-            uploadedBy: req.userId.userId
+            uploadedBy:req.userInfo.userId
         })
 
         await newlyUploadedImage.save();
@@ -40,5 +40,5 @@ const uploadImage = async (req,res)=>{
 }
 
 module.exports = {
-    uploadImage,
+    uploadImageController,
 }
