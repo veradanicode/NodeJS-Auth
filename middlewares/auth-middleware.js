@@ -10,7 +10,7 @@ const authMiddleware = (req,res,next)=>{
     if (!token) {
         return res.status(401).json({
             success:false,
-            message:"Access denied!Please login to continue"
+            message:"Access denied!Token is required,Please login to continue"
         })
     }
     
