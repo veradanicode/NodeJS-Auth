@@ -1,6 +1,6 @@
 const mongoose =require('mongoose')
 
-const UserShema = new mongoose.Schema({
+const UserSchema = new mongoose.Schema({
     username:{
         type:String,
         required:[true,'This field is required!'],
@@ -26,4 +26,4 @@ const UserShema = new mongoose.Schema({
     }
 },{timestamps:true})
 
-module.exports=mongoose.model('User',UserShema)
+module.exports=mongoose.model('User',UserSchema)
