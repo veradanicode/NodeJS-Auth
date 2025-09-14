@@ -1,5 +1,6 @@
 const Image =require('../models/Image')
 const {uploadToCloudinary} =require('../helpers/cloudinaryHelpers')
+const fs =require('fs');
 
 const uploadImageController = async (req,res)=>{
     try {
@@ -22,6 +23,9 @@ const uploadImageController = async (req,res)=>{
         })
 
         await newlyUploadedImage.save();
+        
+        //delete image from local device
+        fs.unlinkSync(req.file.path)
 
         res.status(201).json({
             success:true,
