@@ -7,9 +7,14 @@ passport.use(new GoogleStrategy({
     clientSecret:process.env.GOOGLE_CLIENT_SECRET,
     callbackURL:"http://localhost:3000/api/auth/google/callback"
   },
-  function(accessToken, refreshToken, profile, cb) {
-      return cb(err, user);  
+    async (accessToken, refreshToken, profile, done) => {
+    try {
+      return done(null, profile); 
+    } catch (error) {
+      return done(error, null);
+    }
   }
+ 
 ));
 
 passport.serializeUser(function(user,done){
