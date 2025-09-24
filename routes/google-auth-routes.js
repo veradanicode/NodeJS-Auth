@@ -31,7 +31,6 @@ router.get('/callback',
 
     // You can redirect with token or send it back
     res.json({ success: true, token });
-
     }
 )
 
