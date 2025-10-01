@@ -7,12 +7,10 @@ passport.use(new GoogleStrategy({
     clientSecret:process.env.GOOGLE_CLIENT_SECRET,
     callbackURL:"http://localhost:3000/api/auth/google/callback"
   },
-    async (accessToken, refreshToken, profile, done) => {
-    try {
-      return done(null, profile); 
-    } catch (error) {
-      return done(error, null);
-    }
+    function(accessToken, refreshToken, profile, cb) {
+    User.findOrCreate({ googleId: profile.id }, function (err, user) {
+      return cb(err, user);
+    });
   }
  
 ));
